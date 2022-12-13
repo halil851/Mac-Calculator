@@ -2,8 +2,7 @@
 //  AppDelegate.swift
 //  Calculator
 //
-//  Created by Angela Yu on 10/09/2019.
-//  Copyright © 2019 London App Brewery. All rights reserved.
+//  Created by halil dikişli on 13.12.2022.
 //
 
 import UIKit
