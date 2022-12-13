@@ -15,6 +15,20 @@ class ViewController: UIViewController {
     
     private var isDecimalUsed: Bool = false
     private var isFinishedTypingNumber: Bool = true
+    
+    private var displayValue: Double {
+        get {
+            guard let number = Double(displayLabel.text!) else {
+                fatalError("Can not convert display label text to Double")
+            }
+            return number
+        }
+        
+        set {
+            resultLabel.text = String(newValue)
+            displayLabel.text = String(newValue)
+        }
+    }
 
     @IBAction func calcButtonPressed(_ sender: UIButton) {
 
@@ -24,9 +38,7 @@ class ViewController: UIViewController {
             displayLabel.text = "0."
         }
         
-        guard let number = Double(displayLabel.text!) else {
-            fatalError("Can not convert display label text to Double")
-        }
+       
         
         if let calcMethod = sender.currentTitle {
     
@@ -35,9 +47,10 @@ class ViewController: UIViewController {
                 displayLabel.text = "0"
                 resultLabel.text = "Result"
             } else if calcMethod == "+/-" {
-                resultLabel.text = String(number * -1)
+                displayValue *= -1
             } else if calcMethod == "%"{
-                resultLabel.text = String(number / 100)
+                
+                displayValue /= 100
             }
             
             
