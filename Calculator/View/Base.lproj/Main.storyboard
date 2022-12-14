@@ -26,7 +26,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="121"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2n-16-M0T">
-                                                        <rect key="frame" x="10" y="50.000000000000007" width="373" height="71.666666666666686"/>
+                                                        <rect key="frame" x="10" y="67.666666666666671" width="373" height="54"/>
                                                         <fontDescription key="fontDescription" type="system" weight="thin" pointSize="45"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -37,7 +37,6 @@
                                                     <constraint firstItem="U2n-16-M0T" firstAttribute="leading" secondItem="Aln-K9-itK" secondAttribute="leading" constant="10" id="CoL-Eq-sKt"/>
                                                     <constraint firstItem="U2n-16-M0T" firstAttribute="centerX" secondItem="Aln-K9-itK" secondAttribute="centerX" id="Hd7-Nh-kFf"/>
                                                     <constraint firstAttribute="bottom" secondItem="U2n-16-M0T" secondAttribute="bottom" constant="-0.6666666666666714" id="SCr-Ea-mcC"/>
-                                                    <constraint firstItem="U2n-16-M0T" firstAttribute="top" secondItem="Aln-K9-itK" secondAttribute="top" constant="50" id="nwM-3y-ZQu"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -51,7 +50,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qxo-Tv-uH1">
                                                         <rect key="frame" x="0.0" y="0.0" width="393" height="120.66666666666667"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNs-Te-SYH">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNs-Te-SYH">
                                                                 <rect key="frame" x="10" y="0.0" width="373" height="120.66666666666667"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="40"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
