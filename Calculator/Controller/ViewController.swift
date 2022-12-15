@@ -16,6 +16,8 @@ class ViewController: UIViewController {
     private var isFinishedTypingNumber: Bool = true
     private var isFinishedCalculation: Bool = true
     private var isDecimalUsed: Bool = false
+    private var isCalcButtonPressed: Bool = false
+    private var isNextANumberAfterEqual : Bool = false
     
     private var displayValue: Double {
         get {
@@ -35,16 +37,14 @@ class ViewController: UIViewController {
     private var calculator = CalculatorLogic()
     
     @IBAction func calcButtonPressed(_ sender: UIButton) {
-
+        isNextANumberAfterEqual = false
         isDecimalUsed = false
         isFinishedCalculation = true
-    
-        
 
         calculator.setNumber(displayValue)
         
         if let calcMethod = sender.currentTitle {
- 
+            
             if let result = calculator.calculate(symbol: calcMethod) {
                 
                 displayValue = result
@@ -58,20 +58,22 @@ class ViewController: UIViewController {
                     calculationString = String(Double(calculationString)! * -1)
                     displayLabel.text = decimalOrNot(result)
                 }
+                
                 if calcMethod == "=" {
-//                    isFinishedTypingNumber = true
                     calculationString = String(result)
+                    isCalcButtonPressed = false
+                    isNextANumberAfterEqual = true
                 }
             }
-            
-            
-            
+
             if calcMethod == "AC" {
-                isDecimalUsed = false
                 displayLabel.text = "0"
-                resultLabel.text = "Result"
-                isFinishedTypingNumber = true
                 calculationString = "0"
+                resultLabel.text = "Result"
+                
+                isDecimalUsed = false
+                isFinishedTypingNumber = true
+                isCalcButtonPressed = false
             }
             
             if displayLabel.text != "0",
@@ -79,7 +81,8 @@ class ViewController: UIViewController {
                calcMethod != "=",
                calcMethod != "+/-",
                calcMethod != "%"{
-                
+                if isCalcButtonPressed {  displayLabel.text?.removeLast() }
+                isCalcButtonPressed = true
                 displayLabel.text = displayLabel.text! + calcMethod
             }
         }
@@ -88,20 +91,27 @@ class ViewController: UIViewController {
 
     
     @IBAction func numButtonPressed(_ sender: UIButton) {
+        
+        if isNextANumberAfterEqual {
+            displayLabel.text = ""
+            isNextANumberAfterEqual = false
+        }
+        
+        isCalcButtonPressed = false
         if let numValue = sender.currentTitle {
             
-            if numValue == "."{
+            if numValue == "."{ // avoid second "."
                 if isDecimalUsed { return }
                 isDecimalUsed = true
             }
-            
+
             if isFinishedCalculation {
                 calculationString = numValue
                 isFinishedCalculation = false
             } else {
                 calculationString = calculationString + numValue
             }
-            
+
             if isFinishedTypingNumber {
                 displayLabel.text = numValue
                 isFinishedTypingNumber = false
@@ -111,7 +121,13 @@ class ViewController: UIViewController {
         }
     }
     
+    // if result is integer, avoid to show zero after comma
     func decimalOrNot(_ newValue: Double) -> String {
+        //Int.max = 9223372036854775807
+        if newValue > 9223372036854775807.0 {
+            print("Result can not be greater than 9223372036854775807, because of Int.max")
+            return "0"
+        }
         let toInt = Int(newValue)
         let toDouble = Double(toInt)
         
@@ -124,7 +140,8 @@ class ViewController: UIViewController {
         }
     }
 }
-/// Some fractions can not be stored with exact precision in a binary file system, a universal problem with computer systems.  This side effect can be fixed in Swift using NumberFormatter.
+
+// Some fractions can not be stored with exact precision in a binary file system, a universal problem with computer systems.  This side effect can be fixed in Swift using NumberFormatter.
 extension Double {
   func withCommas() -> String {
     let numberFormatter = NumberFormatter()
