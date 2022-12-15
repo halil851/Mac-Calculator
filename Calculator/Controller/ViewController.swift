@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var displayLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
-    
+    var total = 0.0
     private var calculationString = "0"
     private var isFinishedTypingNumber: Bool = true
     private var isFinishedCalculation: Bool = true
@@ -44,43 +44,45 @@ class ViewController: UIViewController {
         calculator.setNumber(displayValue)
         
         if let calcMethod = sender.currentTitle {
+           
+            
             
             if let result = calculator.calculate(symbol: calcMethod) {
                 
                 displayValue = result
                 
-                if calcMethod == "%" {
+                switch calcMethod {
+                case "%":
                     calculationString = String(Double(calculationString)! / 100)
-                    displayLabel.text = String(result)
-                }
-                
-                if calcMethod == "+/-"{
+                    displayLabel.text = result.withCommas()
+                    
+                case "+/-":
                     calculationString = String(Double(calculationString)! * -1)
                     displayLabel.text = decimalOrNot(result)
-                }
-                
-                if calcMethod == "=" {
+                case "=":
                     calculationString = String(result)
                     isCalcButtonPressed = false
                     isNextANumberAfterEqual = true
-                }
-            }
-
-            if calcMethod == "AC" {
-                displayLabel.text = "0"
-                calculationString = "0"
-                resultLabel.text = "Result"
+                case "AC":
+                    displayLabel.text = "0"
+                    calculationString = "0"
+                    resultLabel.text = "Result"
+                    
+                    isDecimalUsed = false
+                    isFinishedTypingNumber = true
+                    isCalcButtonPressed = false
                 
-                isDecimalUsed = false
-                isFinishedTypingNumber = true
-                isCalcButtonPressed = false
+                default:
+                    print("Error")
+                }
             }
             
             if displayLabel.text != "0",
                displayLabel.text != nil,
                calcMethod != "=",
                calcMethod != "+/-",
-               calcMethod != "%"{
+               calcMethod != "%" {
+                
                 if isCalcButtonPressed {  displayLabel.text?.removeLast() }
                 isCalcButtonPressed = true
                 displayLabel.text = displayLabel.text! + calcMethod
@@ -100,7 +102,7 @@ class ViewController: UIViewController {
         isCalcButtonPressed = false
         if let numValue = sender.currentTitle {
             
-            if numValue == "."{ // avoid second "."
+            if numValue == "."{ // avoid second comma
                 if isDecimalUsed { return }
                 isDecimalUsed = true
             }
