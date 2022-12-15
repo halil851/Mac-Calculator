@@ -7,7 +7,6 @@
 
 import Foundation
 
-import Foundation
 
 struct CalculatorLogic {
     
@@ -17,7 +16,6 @@ struct CalculatorLogic {
     
     mutating func setNumber(_ number: Double) {
         self.number = number
-        print("setNumber is \(number)")
     }
     
     mutating func calculate(symbol: String) -> Double? {

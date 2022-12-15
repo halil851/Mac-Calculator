@@ -12,24 +12,23 @@ class ViewController: UIViewController {
     @IBOutlet weak var displayLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
     
-    private var progressString = "0"
+    private var calculationString = "0"
     private var isFinishedTypingNumber: Bool = true
     private var isFinishedCalculation: Bool = true
     private var isDecimalUsed: Bool = false
-//    private var progress = [String]()
     
     private var displayValue: Double {
         get {
-            if progressString == "." {
-                progressString = "0."
+            if calculationString == "." {
+                calculationString = "0."
             }
-            guard let number = Double(progressString) else {
+            guard let number = Double(calculationString) else {
                 fatalError("Cannot convert display label text to a Double.")
             }
             return number
         }
         set {
-            decimalOrNot(newValue)
+            resultLabel.text = decimalOrNot(newValue)
         }
     }
     
@@ -49,32 +48,41 @@ class ViewController: UIViewController {
             if let result = calculator.calculate(symbol: calcMethod) {
                 
                 displayValue = result
-            }
-            
-            if calcMethod == "+/-" {
                 
+                if calcMethod == "%" {
+                    calculationString = String(Double(calculationString)! / 100)
+                    displayLabel.text = String(result)
+                }
+                
+                if calcMethod == "+/-"{
+                    calculationString = String(Double(calculationString)! * -1)
+                    displayLabel.text = decimalOrNot(result)
+                }
+                if calcMethod == "=" {
+//                    isFinishedTypingNumber = true
+                    calculationString = String(result)
+                }
             }
             
-            if calcMethod == "=" {
-                isFinishedTypingNumber = true
-//                displayLabel.text = resultLabel.text
-            }
+            
             
             if calcMethod == "AC" {
                 isDecimalUsed = false
                 displayLabel.text = "0"
                 resultLabel.text = "Result"
                 isFinishedTypingNumber = true
+                calculationString = "0"
             }
             
             if displayLabel.text != "0",
                displayLabel.text != nil,
-               calcMethod != "=" {
+               calcMethod != "=",
+               calcMethod != "+/-",
+               calcMethod != "%"{
+                
                 displayLabel.text = displayLabel.text! + calcMethod
             }
-            
         }
-        
     }
   
 
@@ -88,38 +96,35 @@ class ViewController: UIViewController {
             }
             
             if isFinishedCalculation {
-                progressString = numValue
+                calculationString = numValue
                 isFinishedCalculation = false
             } else {
-                progressString = progressString + numValue
+                calculationString = calculationString + numValue
             }
             
             if isFinishedTypingNumber {
-                displayLabel.text = ""
                 displayLabel.text = numValue
                 isFinishedTypingNumber = false
-                
             } else {
-                
                 displayLabel.text = displayLabel.text! + numValue
             }
         }
     }
     
-    func decimalOrNot(_ newValue: Double) {
+    func decimalOrNot(_ newValue: Double) -> String {
         let toInt = Int(newValue)
         let toDouble = Double(toInt)
         
         if toDouble == newValue {
-            resultLabel.text = String(toInt)
+            return String(toInt)
            
         } else {
-            resultLabel.text = newValue.withCommas()
+            return newValue.withCommas()
             
         }
     }
 }
-/// Some fractions can not be stored with exact precision in a binary file system, a universal problem with computer systems.  This side effect you describe can be fixed in Swift using NumberFormatter.
+/// Some fractions can not be stored with exact precision in a binary file system, a universal problem with computer systems.  This side effect can be fixed in Swift using NumberFormatter.
 extension Double {
   func withCommas() -> String {
     let numberFormatter = NumberFormatter()
