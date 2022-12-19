@@ -9,11 +9,9 @@ import Foundation
 
 struct CalculatorLogic {
     
-    var numbers = [Double]()
-    var allSymbol = [""]
-    var intermediateResult = 0.0
-    
-    var readyToCalc = true
+    private var numbers = [Double]()
+    private var allSymbol = [""]
+    private var intermediateResult = 0.0
     
     private var number: Double?
     private var intermediateCalculation: (n1: Double, calcMethod: String)?

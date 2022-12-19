@@ -41,7 +41,6 @@ class ViewController: UIViewController {
         isDecimalUsed = false
         isFinishedCalculation = true
         
-        calculator.readyToCalc = true
         calculator.setNumber(displayValue)
         
         if let calcMethod = sender.currentTitle {
