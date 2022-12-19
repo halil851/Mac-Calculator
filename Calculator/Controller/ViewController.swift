@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var displayLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
-    var total = 0.0
+   
     private var calculationString = "0"
     private var isFinishedTypingNumber: Bool = true
     private var isFinishedCalculation: Bool = true
@@ -44,8 +44,6 @@ class ViewController: UIViewController {
         calculator.setNumber(displayValue)
         
         if let calcMethod = sender.currentTitle {
-           
-            
             
             if let result = calculator.calculate(symbol: calcMethod) {
                 
@@ -73,7 +71,7 @@ class ViewController: UIViewController {
                     isCalcButtonPressed = false
                 
                 default:
-                    print("Error")
+                    print("Calculation is done by pressing \(calcMethod)")
                 }
             }
             
@@ -152,3 +150,4 @@ extension Double {
     return numberFormatter.string(from: NSNumber(value: self)) ?? ""
   }
 }
+

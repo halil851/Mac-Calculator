@@ -9,7 +9,10 @@ import Foundation
 
 
 struct CalculatorLogic {
-   
+    var numbers = [Double]()
+    var allSymbol = [""]
+    var intermediateResult = 0.0
+    
     private var number: Double?
     private var intermediateCalculation: (n1: Double, calcMethod: String)?
     
@@ -18,21 +21,55 @@ struct CalculatorLogic {
     }
     
     mutating func calculate(symbol: String) -> Double? {
- 
         
-        if let n = number {
-//            intermediateCalculation = (n1: n, calcMethod: symbol)
+        if var n = number {
+            
             switch symbol {
             case "+/-":
                 return n * -1
             case "AC":
+                numbers.removeAll()
+                allSymbol = [""]
+                intermediateResult = 1
+                n = 0
                 return 0
             case "%":
                 return n * 0.01
             case "=":
-                return performTwoNumCalculation(n2: n)
+                allSymbol = [""]
+                intermediateResult = performTwoNumCalculation(n2: n)!
+                print("After pressing equal the Result is \(intermediateResult)")
+                return intermediateResult
+                
             default: // when pressed + , - , ÷ and × work below
-                intermediateCalculation = (n1: n, calcMethod: symbol)
+                
+                if n != 0.0 {
+                    allSymbol.append(symbol)
+                    let lastSymbol = allSymbol[allSymbol.count - 2]
+                    
+                    numbers.append(n)
+                   
+                    if numbers.count == 1{
+                        intermediateResult = n
+                    }
+                    
+                    switch lastSymbol {
+                    case "+":
+                        intermediateResult = intermediateResult + n
+                    case "-":
+                        intermediateResult = intermediateResult - n
+                    case "×":
+                        intermediateResult = intermediateResult * n
+                    case "÷":
+                        intermediateResult = intermediateResult / n
+                    default:
+                        print("")
+                    }
+                    
+                    n = intermediateResult
+                }
+                intermediateCalculation = (n1: n, calcMethod: symbol) // first number
+                return intermediateResult
             }
         }
         return nil
@@ -59,3 +96,4 @@ struct CalculatorLogic {
         return nil
     }
 }
+
