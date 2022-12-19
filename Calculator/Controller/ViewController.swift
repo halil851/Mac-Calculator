@@ -40,15 +40,15 @@ class ViewController: UIViewController {
         isNextANumberAfterEqual = false
         isDecimalUsed = false
         isFinishedCalculation = true
-
+        
+        calculator.readyToCalc = true
         calculator.setNumber(displayValue)
         
         if let calcMethod = sender.currentTitle {
-            
             if let result = calculator.calculate(symbol: calcMethod) {
-                
+
                 displayValue = result
-                
+               
                 switch calcMethod {
                 case "%":
                     calculationString = String(Double(calculationString)! / 100)
@@ -59,8 +59,8 @@ class ViewController: UIViewController {
                     displayLabel.text = decimalOrNot(result)
                 case "=":
                     calculationString = String(result)
-                    isCalcButtonPressed = false
                     isNextANumberAfterEqual = true
+                    
                 case "AC":
                     displayLabel.text = "0"
                     calculationString = "0"

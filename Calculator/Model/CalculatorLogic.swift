@@ -8,9 +8,12 @@
 import Foundation
 
 struct CalculatorLogic {
+    
     var numbers = [Double]()
     var allSymbol = [""]
     var intermediateResult = 0.0
+    
+    var readyToCalc = true
     
     private var number: Double?
     private var intermediateCalculation: (n1: Double, calcMethod: String)?
@@ -18,6 +21,7 @@ struct CalculatorLogic {
     mutating func setNumber(_ number: Double) {
         self.number = number
     }
+   
     
     mutating func calculate(symbol: String) -> Double? {
         
