@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct CalculatorLogic {
     var numbers = [Double]()
     var allSymbol = [""]
@@ -26,15 +25,16 @@ struct CalculatorLogic {
             
             switch symbol {
             case "+/-":
-                return n * -1
+                intermediateResult = n * -1
+                print(n * -1)
+                return intermediateResult
             case "AC":
                 numbers.removeAll()
                 allSymbol = [""]
-                intermediateResult = 1
-                n = 0
                 return 0
             case "%":
-                return n * 0.01
+                intermediateResult = n / 100
+                return intermediateResult
             case "=":
                 allSymbol = [""]
                 intermediateResult = performTwoNumCalculation(n2: n)!
